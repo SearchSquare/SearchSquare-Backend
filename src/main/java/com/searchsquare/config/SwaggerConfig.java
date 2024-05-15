@@ -22,22 +22,12 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi allApi() {
-        return GroupedOpenApi.builder().group("ssafy-all").pathsToMatch("/**").build();
+        return GroupedOpenApi.builder().group("all").pathsToMatch("/**").build();
     }
 
     @Bean
-    public GroupedOpenApi boardApi() {
-        return GroupedOpenApi.builder().group("ssafy-board").pathsToMatch("/board/**").build();
-    }
-
-    @Bean
-    public GroupedOpenApi userApi() {
-        return GroupedOpenApi.builder().group("ssafy-user").pathsToMatch("/user/**").build();
-    }
-
-    @Bean
-    public GroupedOpenApi mapApi() {
-        return GroupedOpenApi.builder().group("ssafy-map").pathsToMatch("/map/**").build();
+    public GroupedOpenApi memberApi() {
+        return GroupedOpenApi.builder().group("member").pathsToMatch("/member/**").build();
     }
 
 }
