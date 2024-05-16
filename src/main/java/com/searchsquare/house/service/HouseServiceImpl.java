@@ -13,16 +13,6 @@ public class HouseServiceImpl implements HouseService {
 
     private final HouseRepository houseRepository;
 
-    private static List<AddressRes> toAddressRes(List<AddressDto> res) {
-        return res.stream().map(addressDto -> AddressRes.builder()
-                .sido(addressDto.getSido())
-                .gugun(addressDto.getGugun())
-                .dong(addressDto.getDong())
-                .dongCode(addressDto.getDongCode())
-                .build())
-            .toList();
-    }
-
     @Override
     public List<AddressRes> getSido() {
         List<AddressDto> res = houseRepository.getSido();
@@ -39,5 +29,15 @@ public class HouseServiceImpl implements HouseService {
     public List<AddressRes> getDong(String dongCode) {
         List<AddressDto> res = houseRepository.getDong(dongCode);
         return toAddressRes(res);
+    }
+
+    private List<AddressRes> toAddressRes(List<AddressDto> res) {
+        return res.stream().map(addressDto -> AddressRes.builder()
+                .sido(addressDto.getSido())
+                .gugun(addressDto.getGugun())
+                .dong(addressDto.getDong())
+                .dongCode(addressDto.getDongCode())
+                .build())
+            .toList();
     }
 }
