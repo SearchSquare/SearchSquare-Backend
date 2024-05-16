@@ -22,4 +22,10 @@
     where left (dong_code, 2) = #{dongCode} and gugun is not null;
   </select>
 
+  <select id="getDong" parameterType="String" resultMap="address">
+    select dong_code, sido, gugun, dong
+    from dong
+    where left (dong_code, 5) = #{dongCode} and dong is not null;
+  </select>
+
 </mapper>

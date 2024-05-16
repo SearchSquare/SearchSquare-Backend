@@ -10,4 +10,6 @@ public interface HouseRepository {
     List<AddressDto> getSido();
 
     List<AddressDto> getGugun(String dongCode);
+
+    List<AddressDto> getDong(String dongCode);
 }

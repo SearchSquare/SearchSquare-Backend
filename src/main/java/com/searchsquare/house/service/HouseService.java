@@ -8,4 +8,6 @@ public interface HouseService {
     List<AddressRes> getSido();
 
     List<AddressRes> getGugun(String dongCode);
+
+    List<AddressRes> getDong(String dongCode);
 }

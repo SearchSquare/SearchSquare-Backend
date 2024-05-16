@@ -30,4 +30,11 @@ public class HouseController {
         List<AddressRes> res = houseService.getGugun(dongCode);
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
+
+    @GetMapping("/address/dong")
+    public ResponseEntity<BaseResponse<List<AddressRes>>> getDong(
+        @RequestParam("dong-code") String dongCode) {
+        List<AddressRes> res = houseService.getDong(dongCode);
+        return ResponseEntity.ok(BaseResponse.ofSuccess(res));
+    }
 }

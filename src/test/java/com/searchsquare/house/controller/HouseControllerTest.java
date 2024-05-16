@@ -48,4 +48,19 @@ class HouseControllerTest {
             .andExpect(status().isOk());
     }
 
+    @DisplayName("동 목록을 조회한다.")
+    @Test
+    void getDongSuccess() throws Exception {
+        //given
+        String url = "/house/address/dong";
+
+        // then
+        mockMvc.perform(
+                get(url)
+                    .param("dong-code", "11110")
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andDo(print())
+            .andExpect(status().isOk());
+    }
+
 }
