@@ -1,13 +1,16 @@
-package com.searchsquare.house.controller.response;
+package com.searchsquare.house.service.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Builder
 @Getter
+@Builder
 @AllArgsConstructor
-public class AddressRes {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class AddressDto {
 
     private String sido;
     private String gugun;
