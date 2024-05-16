@@ -16,4 +16,10 @@
     from dong;
   </select>
 
+  <select id="getGugun" parameterType="String" resultMap="address">
+    select distinct left (dong_code, 5) dong_code, sido, gugun
+    from dong
+    where left (dong_code, 2) = #{dongCode} and gugun is not null;
+  </select>
+
 </mapper>

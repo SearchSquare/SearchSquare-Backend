@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface HouseRepository {
 
     List<AddressDto> getSido();
+
+    List<AddressDto> getGugun(String dongCode);
 }

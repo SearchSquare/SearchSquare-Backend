@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -20,6 +21,13 @@ public class HouseController {
     @GetMapping("/address/sido")
     public ResponseEntity<BaseResponse<List<AddressRes>>> getSido() {
         List<AddressRes> res = houseService.getSido();
+        return ResponseEntity.ok(BaseResponse.ofSuccess(res));
+    }
+
+    @GetMapping("/address/gugun")
+    public ResponseEntity<BaseResponse<List<AddressRes>>> getGugun(
+        @RequestParam("dong-code") String dongCode) {
+        List<AddressRes> res = houseService.getGugun(dongCode);
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
 }

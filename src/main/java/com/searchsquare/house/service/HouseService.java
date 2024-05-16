@@ -6,4 +6,6 @@ import java.util.List;
 public interface HouseService {
 
     List<AddressRes> getSido();
+
+    List<AddressRes> getGugun(String dongCode);
 }

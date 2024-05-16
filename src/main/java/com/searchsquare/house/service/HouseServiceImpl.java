@@ -24,4 +24,16 @@ public class HouseServiceImpl implements HouseService {
                 .build())
             .toList();
     }
+
+    @Override
+    public List<AddressRes> getGugun(String dongCode) {
+        List<AddressDto> res = houseRepository.getGugun(dongCode);
+        return res.stream().map(addressDto -> AddressRes.builder()
+                .sido(addressDto.getSido())
+                .gugun(addressDto.getGugun())
+                .dong(addressDto.getDong())
+                .dongCode(addressDto.getDongCode())
+                .build())
+            .toList();
+    }
 }
