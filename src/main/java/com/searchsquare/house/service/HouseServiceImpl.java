@@ -13,9 +13,7 @@ public class HouseServiceImpl implements HouseService {
 
     private final HouseRepository houseRepository;
 
-    @Override
-    public List<AddressRes> getSido() {
-        List<AddressDto> res = houseRepository.getSido();
+    private static List<AddressRes> toAddressRes(List<AddressDto> res) {
         return res.stream().map(addressDto -> AddressRes.builder()
                 .sido(addressDto.getSido())
                 .gugun(addressDto.getGugun())
@@ -23,29 +21,23 @@ public class HouseServiceImpl implements HouseService {
                 .dongCode(addressDto.getDongCode())
                 .build())
             .toList();
+    }
+
+    @Override
+    public List<AddressRes> getSido() {
+        List<AddressDto> res = houseRepository.getSido();
+        return toAddressRes(res);
     }
 
     @Override
     public List<AddressRes> getGugun(String dongCode) {
         List<AddressDto> res = houseRepository.getGugun(dongCode);
-        return res.stream().map(addressDto -> AddressRes.builder()
-                .sido(addressDto.getSido())
-                .gugun(addressDto.getGugun())
-                .dong(addressDto.getDong())
-                .dongCode(addressDto.getDongCode())
-                .build())
-            .toList();
+        return toAddressRes(res);
     }
 
     @Override
     public List<AddressRes> getDong(String dongCode) {
         List<AddressDto> res = houseRepository.getDong(dongCode);
-        return res.stream().map(addressDto -> AddressRes.builder()
-                .sido(addressDto.getSido())
-                .gugun(addressDto.getGugun())
-                .dong(addressDto.getDong())
-                .dongCode(addressDto.getDongCode())
-                .build())
-            .toList();
+        return toAddressRes(res);
     }
 }
