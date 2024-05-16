@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.searchsquare.house.repository.HouseRepository">
+
+  <resultMap id="address" type="addressDto">
+    <result column="dong_code" property="dongCode"/>
+    <result column="sido" property="sido"/>
+    <result column="gugun" property="gugun"/>
+    <result column="dong" property="dong"/>
+  </resultMap>
+
+  <select id="getSido" resultMap="address">
+    select distinct left (dong_code, 2) dong_code, sido
+    from dong;
+  </select>
+
+  <select id="getGugun" parameterType="String" resultMap="address">
+    select distinct left (dong_code, 5) dong_code, sido, gugun
+    from dong
+    where left (dong_code, 2) = #{dongCode} and gugun is not null;
+  </select>
+
+  <select id="getDong" parameterType="String" resultMap="address">
+    select dong_code, sido, gugun, dong
+    from dong
+    where left (dong_code, 5) = #{dongCode} and dong is not null;
+  </select>
+
+</mapper>

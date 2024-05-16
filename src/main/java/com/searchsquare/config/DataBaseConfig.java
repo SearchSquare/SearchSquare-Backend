@@ -2,6 +2,7 @@ package com.searchsquare.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import javax.sql.DataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,8 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-
-import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
@@ -40,9 +39,8 @@ public class DataBaseConfig {
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         SqlSessionFactoryBean session = new SqlSessionFactoryBean();
         session.setDataSource(dataSource);
-        // TODO : mapper.xml 추가한 후 주석 해제
-        // session.setMapperLocations(applicationContext.getResources("classpath:mapper/**/*.xml"));
-        session.setTypeAliasesPackage("com.searchsquare.*.service.domain");
+        session.setMapperLocations(applicationContext.getResources("classpath:mapper/**/*.xml"));
+        session.setTypeAliasesPackage("com.searchsquare.*.service.dto");
         return session.getObject();
     }
 
