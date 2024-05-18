@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberDto {
 
-    private Long id;
+    private int id;
     private String nickname;
     private String email;
     private String profileImg;
     private String gender;
-    private String birthYear;
+    private int birthYear;
     private String age;
     private Provider provider;
     private AccessTokenDto accessToken;

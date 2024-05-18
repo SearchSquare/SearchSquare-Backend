@@ -19,6 +19,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    /**
+     * 네이버 인증 코드를 사용하여 사용자 정보를 조회한 후 로그인 또는 회원가입을 처리한다. JWT 토큰을 자체적으로 생성하여 응답으로 반환한다.
+     *
+     * @param req 네이버 로그인 성공 시 발급받는 code
+     * @return 회원 정보와 서비스 자체 AccessToken
+     */
     @PostMapping("/oauth/naver")
     public ResponseEntity<BaseResponse<MemberDto>> naverLogin(@RequestBody NaverLoginReq req) {
         MemberDto res = memberService.naverLogin(

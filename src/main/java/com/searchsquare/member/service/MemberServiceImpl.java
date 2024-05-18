@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
         return MemberDto.builder()
             .email(naverLoginRes.getEmail())
             .age(naverLoginRes.getAge())
-            .birthYear(naverLoginRes.getBirthYear())
+            .birthYear(Integer.parseInt(naverLoginRes.getBirthYear()))
             .gender(naverLoginRes.getGender())
             .nickname(naverLoginRes.getNickname())
             .profileImg(checkImg(naverLoginRes.getProfileImg()))

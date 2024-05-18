@@ -4,20 +4,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.searchsquare.MockMvcTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-@AutoConfigureMockMvc
-@SpringBootTest
-class HouseControllerTest {
+class HouseControllerTest extends MockMvcTest {
 
     @Autowired
-    private MockMvc mockMvc; // mockMvc 생성
+    protected MockMvc mockMvc;
 
     @DisplayName("시/도 목록을 조회한다.")
     @Test
