@@ -10,6 +10,6 @@ import lombok.Getter;
 public class SearchHouseCond {
 
     private String dongCode;
-    private Integer lastAptId;
+    private Integer lastHouseId;
     private Integer size;
 }

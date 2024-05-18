@@ -60,20 +60,20 @@ public class HouseController {
     /**
      * 아파트 목록을 조회한다. (no-offset 페이징 처리)
      *
-     * @param dongCode  검색하고자 하는 동 코드
-     * @param size      한 페이지에 조회할 개수
-     * @param lastAptId 두번째 조회부터 유효
+     * @param dongCode    검색하고자 하는 동 코드
+     * @param size        한 페이지에 조회할 개수
+     * @param lastHouseId 두번째 조회부터 유효
      * @return
      */
     @GetMapping("/")
     public ResponseEntity<BaseResponse<List<HouseDto>>> getHouseList(
         @RequestParam("dong-code") String dongCode,
         @RequestParam("size") Integer size,
-        @RequestParam(value = "last-apt-id", required = false) Integer lastAptId
+        @RequestParam(value = "last-house-id", required = false) Integer lastHouseId
     ) {
         List<HouseDto> res = houseService.getHouseList(SearchHouseCond.builder()
             .dongCode(dongCode)
-            .lastAptId(lastAptId)
+            .lastHouseId(lastHouseId)
             .size(size)
             .build());
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));

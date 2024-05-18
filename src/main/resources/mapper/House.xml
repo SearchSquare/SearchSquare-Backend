@@ -44,8 +44,8 @@
     left join dong on apt.dong_code = dong.dong_code
     left join apt_deal on apt.apt_id = apt_deal.apt_id
     where apt.dong_code = #{dongCode}
-    <if test="lastAptId != null">
-      and apt.apt_id > #{lastAptId}
+    <if test="lastHouseId != null">
+      and apt.apt_id > #{lastHouseId}
     </if>
     group by apt.apt_id
     order by apt.apt_id desc
