@@ -63,4 +63,37 @@ class HouseControllerTest {
             .andExpect(status().isOk());
     }
 
+    @DisplayName("동 코드로 아파트 목록을 최초로 조회한다.")
+    @Test
+    void firstGetHouseListSuccess() throws Exception {
+        //given
+        String url = "/house/";
+
+        // then
+        mockMvc.perform(
+                get(url)
+                    .param("dong-code", "1120011200")
+                    .param("size", "10")
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @DisplayName("동 코드와 직전 아파트 id로 아파트 목록 2페이지를 조회한다.")
+    @Test
+    void secondGetHouseListSuccess() throws Exception {
+        //given
+        String url = "/house/";
+
+        // then
+        mockMvc.perform(
+                get(url)
+                    .param("dong-code", "1120011200")
+                    .param("size", "10")
+                    .param("last-house-id", "284066")
+                    .contentType(MediaType.APPLICATION_JSON)
+            ).andDo(print())
+            .andExpect(status().isOk());
+    }
+
 }

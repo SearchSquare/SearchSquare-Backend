@@ -1,13 +1,17 @@
 package com.searchsquare.house.service;
 
-import com.searchsquare.house.controller.response.AddressRes;
+import com.searchsquare.house.service.dto.AddressDto;
+import com.searchsquare.house.service.dto.HouseDto;
+import com.searchsquare.house.service.dto.SearchHouseCond;
 import java.util.List;
 
 public interface HouseService {
 
-    List<AddressRes> getSido();
+    List<AddressDto> getSido();
 
-    List<AddressRes> getGugun(String dongCode);
+    List<AddressDto> getGugun(String dongCode);
 
-    List<AddressRes> getDong(String dongCode);
+    List<AddressDto> getDong(String dongCode);
+
+    List<HouseDto> getHouseList(SearchHouseCond cond);
 }
