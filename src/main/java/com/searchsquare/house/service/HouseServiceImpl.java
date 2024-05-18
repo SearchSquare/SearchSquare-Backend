@@ -1,43 +1,42 @@
 package com.searchsquare.house.service;
 
-import com.searchsquare.house.controller.response.AddressRes;
 import com.searchsquare.house.repository.HouseRepository;
 import com.searchsquare.house.service.dto.AddressDto;
+import com.searchsquare.house.service.dto.HouseDto;
+import com.searchsquare.house.service.dto.SearchHouseCond;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class HouseServiceImpl implements HouseService {
 
     private final HouseRepository houseRepository;
 
+    @Transactional(readOnly = true)
     @Override
-    public List<AddressRes> getSido() {
-        List<AddressDto> res = houseRepository.getSido();
-        return toAddressRes(res);
+    public List<AddressDto> getSido() {
+        return houseRepository.getSido();
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<AddressRes> getGugun(String dongCode) {
-        List<AddressDto> res = houseRepository.getGugun(dongCode);
-        return toAddressRes(res);
+    public List<AddressDto> getGugun(String dongCode) {
+        return houseRepository.getGugun(dongCode);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<AddressRes> getDong(String dongCode) {
-        List<AddressDto> res = houseRepository.getDong(dongCode);
-        return toAddressRes(res);
+    public List<AddressDto> getDong(String dongCode) {
+        return houseRepository.getDong(dongCode);
     }
 
-    private List<AddressRes> toAddressRes(List<AddressDto> res) {
-        return res.stream().map(addressDto -> AddressRes.builder()
-                .sido(addressDto.getSido())
-                .gugun(addressDto.getGugun())
-                .dong(addressDto.getDong())
-                .dongCode(addressDto.getDongCode())
-                .build())
-            .toList();
+    @Transactional(readOnly = true)
+    @Override
+    public List<HouseDto> getHouseList(SearchHouseCond cond) {
+        return houseRepository.getHouseList(cond);
     }
 }
