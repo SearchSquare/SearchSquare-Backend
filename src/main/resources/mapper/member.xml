@@ -15,7 +15,7 @@
     <result column="provider" property="provider"/>
   </resultMap>
 
-  <select id="findExistingMember" parameterType="existMemberSearch" resultMap="member">
+  <select id="findExistingMember" parameterType="searchMemberCond" resultMap="member">
     select member_id,
            nickname,
            email,

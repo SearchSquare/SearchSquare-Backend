@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ExistMemberSearch {
+public class SearchMemberCond {
 
     private String email;
     private Provider provider;

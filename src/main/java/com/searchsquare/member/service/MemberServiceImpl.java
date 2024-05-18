@@ -6,9 +6,9 @@ import com.searchsquare.infra.oauth.NaverApiClient;
 import com.searchsquare.infra.oauth.response.NaverLoginRes;
 import com.searchsquare.member.repository.MemberRepository;
 import com.searchsquare.member.service.command.NaverLoginCommand;
-import com.searchsquare.member.service.dto.ExistMemberSearch;
 import com.searchsquare.member.service.dto.MemberDto;
 import com.searchsquare.member.service.dto.Provider;
+import com.searchsquare.member.service.dto.SearchMemberCond;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto naverLogin(NaverLoginCommand cmd) {
         NaverLoginRes naverLoginRes = naverApiClient.requestOauthInfo(cmd.getAccessToken());
         MemberDto member = memberRepository.findExistingMember(
-            ExistMemberSearch.builder()
+            SearchMemberCond.builder()
                 .email(naverLoginRes.getEmail())
                 .provider(naverLoginRes.getProvider())
                 .build()
