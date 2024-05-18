@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class OAuthServiceImpl implements OAuthService {
+public class MemberServiceImpl implements MemberService {
 
     @Value("${member.default-profile-img}")
     private String DEFAULT_PROFILE_IMG;
