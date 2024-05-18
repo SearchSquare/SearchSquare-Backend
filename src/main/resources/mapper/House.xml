@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.searchsquare.house.repository.HouseRepository">
+
+  <resultMap id="house" type="houseDto">
+    <id column="apt_id" property="aptId"/>
+    <result column="name" property="name"/>
+    <result column="lat" property="lat"/>
+    <result column="lng" property="lng"/>
+    <result column="built_year" property="builtYear"/>
+    <result column="jibun" property="jibun"/>
+    <association property="address" resultMap="address"/>
+    <association property="price" resultMap="price"/>
+  </resultMap>
+
+  <resultMap id="address" type="addressDto">
+    <result column="dong_code" property="dongCode"/>
+    <result column="sido" property="sido"/>
+    <result column="gugun" property="gugun"/>
+    <result column="dong" property="dong"/>
+  </resultMap>
+
+  <resultMap id="price" type="priceDto">
+    <result column="max_price" property="maxPrice"/>
+    <result column="min_price" property="minPrice"/>
+  </resultMap>
+
+  <select id="getHouseList" parameterType="searchHouseCond" resultMap="house">
+    select apt.apt_id,
+    apt.name,
+    apt.lat,
+    apt.lng,
+    apt.built_year,
+    apt.jibun,
+    dong.dong_code,
+    dong.sido,
+    dong.gugun,
+    dong.dong,
+    ifnull(max(apt_deal.price), 0) as max_price,
+    ifnull(min(apt_deal.price), 0) as min_price
+    from apt
+    left join dong on apt.dong_code = dong.dong_code
+    left join apt_deal on apt.apt_id = apt_deal.apt_id
+    where apt.dong_code = #{dongCode}
+    <if test="lastAptId != null">
+      and apt.apt_id > #{lastAptId}
+    </if>
+    group by apt.apt_id
+    order by apt.apt_id desc
+    limit #{size};
+  </select>
+
+
+  <select id="getSido" resultMap="address">
+    select distinct left(dong_code, 2) dong_code, sido
+    from dong;
+  </select>
+
+  <select id="getGugun" parameterType="String" resultMap="address">
+    select distinct left(dong_code, 5) dong_code, sido, gugun
+    from dong
+    where left(dong_code, 2) = #{dongCode}
+      and gugun is not null;
+  </select>
+
+  <select id="getDong" parameterType="String" resultMap="address">
+    select dong_code, sido, gugun, dong
+    from dong
+    where left(dong_code, 5) = #{dongCode}
+      and dong is not null;
+  </select>
+
+</mapper>
