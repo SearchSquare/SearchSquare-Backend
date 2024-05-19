@@ -48,7 +48,7 @@
       and apt.apt_id > #{lastHouseId}
     </if>
     group by apt.apt_id
-    order by apt.apt_id desc
+    order by apt.apt_id asc
     limit #{size};
   </select>
 
