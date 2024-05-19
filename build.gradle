@@ -1,51 +1,55 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.5'
-	id 'io.spring.dependency-management' version '1.1.4'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	sourceCompatibility = '17'
+    sourceCompatibility = '17'
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	set('sentryVersion', "7.3.0")
+    set('sentryVersion', "7.3.0")
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-	// https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.4.0'
-	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    // JWT API 의존성
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.4.0'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "io.sentry:sentry-bom:${sentryVersion}"
-	}
+    imports {
+        mavenBom "io.sentry:sentry-bom:${sentryVersion}"
+    }
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
