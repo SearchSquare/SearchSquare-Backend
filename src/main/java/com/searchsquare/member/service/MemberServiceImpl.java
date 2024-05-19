@@ -2,6 +2,7 @@ package com.searchsquare.member.service;
 
 import static java.util.Objects.isNull;
 
+import com.searchsquare.core.util.JwtUtil;
 import com.searchsquare.infra.oauth.NaverApiClient;
 import com.searchsquare.infra.oauth.response.NaverLoginRes;
 import com.searchsquare.member.repository.MemberRepository;
@@ -9,6 +10,7 @@ import com.searchsquare.member.service.command.NaverLoginCommand;
 import com.searchsquare.member.service.dto.MemberDto;
 import com.searchsquare.member.service.dto.Provider;
 import com.searchsquare.member.service.dto.SearchMemberCond;
+import com.searchsquare.member.service.dto.TokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,7 @@ public class MemberServiceImpl implements MemberService {
     private String DEFAULT_PROFILE_IMG;
     private final NaverApiClient naverApiClient;
     private final MemberRepository memberRepository;
+    private final JwtUtil jwtUtil;
 
     @Override
     public MemberDto naverLogin(NaverLoginCommand cmd) {
@@ -34,13 +37,14 @@ public class MemberServiceImpl implements MemberService {
                 .build()
         );
         if (isNull(member)) {
-            member = createNewMember(naverLoginRes);
-            memberRepository.save(member);
+            memberRepository.save(newMember(naverLoginRes));
         }
-        return member;
+        return member.renewToken(TokenDto.builder()
+            .accessToken(jwtUtil.createAccessToken(toString(member.getId())))
+            .build());
     }
 
-    private MemberDto createNewMember(NaverLoginRes naverLoginRes) {
+    private MemberDto newMember(NaverLoginRes naverLoginRes) {
         return MemberDto.builder()
             .email(naverLoginRes.getEmail())
             .age(naverLoginRes.getAge())
@@ -50,6 +54,10 @@ public class MemberServiceImpl implements MemberService {
             .profileImg(checkImg(naverLoginRes.getProfileImg()))
             .provider(Provider.NAVER)
             .build();
+    }
+
+    private String toString(Integer memberId) {
+        return String.valueOf(memberId);
     }
 
     private String checkImg(String profileImg) {

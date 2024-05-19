@@ -20,5 +20,10 @@ public class MemberDto {
     private int birthYear;
     private String age;
     private Provider provider;
-    private AccessTokenDto accessToken;
+    private TokenDto token;
+
+    public MemberDto renewToken(TokenDto token) {
+        this.token = token;
+        return this;
+    }
 }

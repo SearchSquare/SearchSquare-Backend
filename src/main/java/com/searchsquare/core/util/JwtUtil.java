@@ -32,8 +32,8 @@ public class JwtUtil {
     @Value("${jwt.access-token.expiretime}")
     private long accessTokenExpireTime;
 
-    public String createAccessToken(String userId) {
-        return create(userId, ACCESS_TOKEN, accessTokenExpireTime);
+    public String createAccessToken(String memberId) {
+        return create(memberId, ACCESS_TOKEN, accessTokenExpireTime);
     }
 
     private String create(String memberId, String subject, long expireTime) {
@@ -76,7 +76,7 @@ public class JwtUtil {
     }
 
     private static boolean isExpired(Jws<Claims> claims) {
-        return claims.getBody().getExpiration().after(new Date());
+        return claims.getBody().getExpiration().before(new Date());
     }
 
     private byte[] generateKey() {

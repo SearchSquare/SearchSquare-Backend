@@ -29,7 +29,7 @@
       and provider = #{provider};
   </select>
 
-  <insert id="save" parameterType="memberDto">
+  <insert id="save" parameterType="memberDto" useGeneratedKeys="true" keyProperty="id">
     insert into member (email, gender, birth_year, profile_img, provider, age, nickname)
     values (#{email}, #{gender}, #{birthYear}, #{profileImg}, #{provider}, #{age}, #{nickname});
   </insert>

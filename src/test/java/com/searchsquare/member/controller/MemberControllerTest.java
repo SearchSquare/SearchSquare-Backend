@@ -11,9 +11,9 @@ import com.searchsquare.MockMvcTest;
 import com.searchsquare.member.controller.request.NaverLoginReq;
 import com.searchsquare.member.service.MemberService;
 import com.searchsquare.member.service.command.NaverLoginCommand;
-import com.searchsquare.member.service.dto.AccessTokenDto;
 import com.searchsquare.member.service.dto.MemberDto;
 import com.searchsquare.member.service.dto.Provider;
+import com.searchsquare.member.service.dto.TokenDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ class MemberControllerTest extends MockMvcTest {
             .birthYear(2024)
             .age("20-29")
             .provider(Provider.NAVER)
-            .accessToken(AccessTokenDto.builder()
+            .token(TokenDto.builder()
                 .accessToken("mock-access-token")
                 .build())
             .build();
