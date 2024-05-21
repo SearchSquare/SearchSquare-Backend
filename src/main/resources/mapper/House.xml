@@ -6,11 +6,11 @@
 
   <resultMap id="house" type="houseDto">
     <id column="apt_id" property="aptId"/>
+    <result column="built_year" property="builtYear"/>
+    <result column="jibun" property="jibun"/>
     <result column="name" property="name"/>
     <result column="lat" property="lat"/>
     <result column="lng" property="lng"/>
-    <result column="built_year" property="builtYear"/>
-    <result column="jibun" property="jibun"/>
     <association property="address" resultMap="address"/>
     <association property="price" resultMap="price"/>
   </resultMap>
@@ -26,6 +26,32 @@
     <result column="max_price" property="maxPrice"/>
     <result column="min_price" property="minPrice"/>
   </resultMap>
+
+  <resultMap id="houseDeal" type="houseDealDto">
+    <id column="apt_deal_id" property="houseDealId"/>
+    <result column="nickname" property="nickname"/>
+    <result column="area" property="area"/>
+    <result column="floor" property="floor"/>
+    <result column="price" property="price"/>
+    <result column="deal_date" property="dealDate"/>
+  </resultMap>
+
+  <select id="getDealList" parameterType="searchHouseDealCond" resultMap="houseDeal">
+    select ad.apt_deal_id,
+    ad.floor,
+    ad.area,
+    ad.deal_date,
+    ad.price,
+    m.nickname
+    from apt_deal ad
+    left join member m on m.member_id = ad.member_id
+    where ad.apt_id = #{houseId}
+    <if test="lastDealId != null">
+      and ad.apt_deal_id > #{lastDealId}
+    </if>
+    order by ad.apt_deal_id asc
+    limit #{size};
+  </select>
 
   <select id="getHouseList" parameterType="searchHouseCond" resultMap="house">
     select apt.apt_id,

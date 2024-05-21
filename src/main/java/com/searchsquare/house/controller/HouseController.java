@@ -3,12 +3,15 @@ package com.searchsquare.house.controller;
 import com.searchsquare.core.response.BaseResponse;
 import com.searchsquare.house.service.HouseService;
 import com.searchsquare.house.service.dto.AddressDto;
+import com.searchsquare.house.service.dto.HouseDealDto;
 import com.searchsquare.house.service.dto.HouseDto;
 import com.searchsquare.house.service.dto.SearchHouseCond;
+import com.searchsquare.house.service.dto.SearchHouseDealCond;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class HouseController {
 
     private final HouseService houseService;
+
+    /**
+     * 아파트 목록을 조회한다. (no-offset 페이징 처리)
+     *
+     * @param dongCode    검색하고자 하는 동 코드
+     * @param size        한 페이지에 조회할 개수
+     * @param lastHouseId 두번째 조회부터 유효
+     * @return
+     */
+    @GetMapping("/")
+    public ResponseEntity<BaseResponse<List<HouseDto>>> getHouseList(
+        @RequestParam("dong-code") String dongCode,
+        @RequestParam("size") Integer size,
+        @RequestParam(value = "last-house-id", required = false) Integer lastHouseId
+    ) {
+        List<HouseDto> res = houseService.getHouseList(SearchHouseCond.builder()
+            .dongCode(dongCode)
+            .lastHouseId(lastHouseId)
+            .size(size)
+            .build());
+        return ResponseEntity.ok(BaseResponse.ofSuccess(res));
+    }
 
     /**
      * 시/도 목록을 조회한다.
@@ -57,24 +82,16 @@ public class HouseController {
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
 
-    /**
-     * 아파트 목록을 조회한다. (no-offset 페이징 처리)
-     *
-     * @param dongCode    검색하고자 하는 동 코드
-     * @param size        한 페이지에 조회할 개수
-     * @param lastHouseId 두번째 조회부터 유효
-     * @return
-     */
-    @GetMapping("/")
-    public ResponseEntity<BaseResponse<List<HouseDto>>> getHouseList(
-        @RequestParam("dong-code") String dongCode,
+    @GetMapping("/deal/{house-id}")
+    public ResponseEntity<BaseResponse<List<HouseDealDto>>> getDealList(
+        @PathVariable("house-id") int houseId,
         @RequestParam("size") Integer size,
-        @RequestParam(value = "last-house-id", required = false) Integer lastHouseId
+        @RequestParam(value = "last-deal-id", required = false) Integer lastDealId
     ) {
-        List<HouseDto> res = houseService.getHouseList(SearchHouseCond.builder()
-            .dongCode(dongCode)
-            .lastHouseId(lastHouseId)
+        List<HouseDealDto> res = houseService.getDealList(SearchHouseDealCond.builder()
             .size(size)
+            .houseId(houseId)
+            .lastDealId(lastDealId)
             .build());
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
