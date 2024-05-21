@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.searchsquare.member.repository.MemberRepository">
+
+  <resultMap id="member" type="memberDto">
+    <result column="member_id" property="id"/>
+    <result column="nickname" property="nickname"/>
+    <result column="email" property="email"/>
+    <result column="profile_img" property="profileImg"/>
+    <result column="gender" property="gender"/>
+    <result column="birth_year" property="birthYear"/>
+    <result column="age" property="age"/>
+    <result column="provider" property="provider"/>
+  </resultMap>
+
+  <select id="findExistingMember" parameterType="searchMemberCond" resultMap="member">
+    select member_id,
+           nickname,
+           email,
+           profile_img,
+           gender,
+           birth_year,
+           age,
+           provider
+    from member
+    where email = #{email}
+      and provider = #{provider};
+  </select>
+
+  <insert id="save" parameterType="memberDto" useGeneratedKeys="true" keyProperty="id">
+    insert into member (email, gender, birth_year, profile_img, provider, age, nickname)
+    values (#{email}, #{gender}, #{birthYear}, #{profileImg}, #{provider}, #{age}, #{nickname});
+  </insert>
+
+</mapper>
