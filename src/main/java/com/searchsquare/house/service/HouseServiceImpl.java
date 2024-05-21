@@ -2,8 +2,11 @@ package com.searchsquare.house.service;
 
 import com.searchsquare.house.repository.HouseRepository;
 import com.searchsquare.house.service.dto.AddressDto;
+import com.searchsquare.house.service.dto.AroundPriceDto;
 import com.searchsquare.house.service.dto.HouseDealDto;
 import com.searchsquare.house.service.dto.HouseDto;
+import com.searchsquare.house.service.dto.HousePriceDto;
+import com.searchsquare.house.service.dto.SearchAroundPriceCond;
 import com.searchsquare.house.service.dto.SearchHouseCond;
 import com.searchsquare.house.service.dto.SearchHouseDealCond;
 import java.util.List;
@@ -17,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class HouseServiceImpl implements HouseService {
 
     private final HouseRepository houseRepository;
+
+    private final int MAX_RADIUS = 500;
 
     @Transactional(readOnly = true)
     @Override
@@ -46,5 +51,15 @@ public class HouseServiceImpl implements HouseService {
     @Override
     public List<HouseDealDto> getDealList(SearchHouseDealCond cond) {
         return houseRepository.getDealList(cond);
+    }
+
+    @Override
+    public AroundPriceDto getAroundPriceList(SearchAroundPriceCond cond) {
+        List<HousePriceDto> target = houseRepository.getTargetPriceList(cond);
+        List<HousePriceDto> around = houseRepository.getAroundPriceList(cond);
+        return AroundPriceDto.builder()
+            .target(target)
+            .around(around)
+            .build();
     }
 }

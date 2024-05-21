@@ -36,6 +36,33 @@
     <result column="deal_date" property="dealDate"/>
   </resultMap>
 
+  <resultMap id="housePrice" type="housePriceDto">
+    <result column="deal_year" property="year"/>
+    <result column="avg_price" property="avgPrice"/>
+  </resultMap>
+
+  <select id="getTargetPriceList" parameterType="searchAroundPriceCond" resultMap="housePrice">
+    select date_format(ad.deal_date, '%Y-%m') as 'deal_year', avg(ad.price) as 'avg_price'
+    from apt_deal ad
+           left join apt a on ad.apt_id = a.apt_id
+    where a.lng = #{lng}
+      and a.lat = #{lat}
+    group by deal_year
+    order by deal_year asc;
+  </select>
+
+  <select id="getAroundPriceList" parameterType="searchAroundPriceCond" resultMap="housePrice">
+    <![CDATA[
+    select date_format(ad.deal_date, '%Y-%m') as 'deal_year', avg(ad.price) as 'avg_price'
+    from apt_deal ad
+           left join searchsquare.apt a on a.apt_id = ad.apt_id
+    where ST_Distance_Sphere(point(lng, lat), point(#{lng}, #{lat})) <= #{radius}
+      and dong_code = #{dongCode}
+    group by deal_year
+    order by deal_year asc;
+    ]]>
+  </select>
+
   <select id="getDealList" parameterType="searchHouseDealCond" resultMap="houseDeal">
     select ad.apt_deal_id,
     ad.floor,

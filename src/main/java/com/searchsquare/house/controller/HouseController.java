@@ -1,12 +1,16 @@
 package com.searchsquare.house.controller;
 
 import com.searchsquare.core.response.BaseResponse;
+import com.searchsquare.house.service.HouseLogService;
 import com.searchsquare.house.service.HouseService;
 import com.searchsquare.house.service.dto.AddressDto;
+import com.searchsquare.house.service.dto.AroundPriceDto;
 import com.searchsquare.house.service.dto.HouseDealDto;
 import com.searchsquare.house.service.dto.HouseDto;
+import com.searchsquare.house.service.dto.SearchAroundPriceCond;
 import com.searchsquare.house.service.dto.SearchHouseCond;
 import com.searchsquare.house.service.dto.SearchHouseDealCond;
+import jakarta.validation.constraints.Max;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HouseController {
 
     private final HouseService houseService;
+    private final HouseLogService houseLogService;
 
     /**
      * 아파트 목록을 조회한다. (no-offset 페이징 처리)
@@ -93,6 +98,24 @@ public class HouseController {
             .houseId(houseId)
             .lastDealId(lastDealId)
             .build());
+        return ResponseEntity.ok(BaseResponse.ofSuccess(res));
+    }
+
+    @GetMapping("/price/{house-id}")
+    public ResponseEntity<BaseResponse<AroundPriceDto>> getAroundPriceList(
+        @PathVariable("house-id") int houseId,
+        @RequestParam("lat") double lat,
+        @RequestParam("lng") double lng,
+        @RequestParam("dong-code") String dongCode,
+        @RequestParam("radius") @Max(value = 500, message = "검색 가능한 범위를 벗어났습니다.") int radius
+    ) {
+        AroundPriceDto res = houseService.getAroundPriceList(SearchAroundPriceCond.builder()
+            .lat(lat)
+            .lng(lng)
+            .dongCode(dongCode)
+            .radius(radius)
+            .build());
+        houseLogService.saveViewLog(houseId);
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
 }
