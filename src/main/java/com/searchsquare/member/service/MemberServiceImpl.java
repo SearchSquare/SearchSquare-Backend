@@ -39,6 +39,12 @@ public class MemberServiceImpl implements MemberService {
         if (isNull(member)) {
             memberRepository.save(newMember(naverLoginRes));
         }
+        member = memberRepository.findExistingMember(
+            SearchMemberCond.builder()
+                .email(naverLoginRes.getEmail())
+                .provider(naverLoginRes.getProvider())
+                .build()
+        );
         return member.renewToken(TokenDto.builder()
             .accessToken(jwtUtil.createAccessToken(toString(member.getId())))
             .build());

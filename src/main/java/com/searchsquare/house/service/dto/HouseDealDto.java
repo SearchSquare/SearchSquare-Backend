@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class HouseDealDto {
 
     private int houseDealId;
-    private String seller;
+    private String nickname;
     private String area;
     private String floor;
     private int price;
