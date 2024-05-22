@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.searchsquare.api.repository.ApiLogRepository">
+
+  <insert id="save" parameterType="String">
+    insert into api_log (api_key) value (#{serviceKey});
+  </insert>
+
+</mapper>

@@ -28,6 +28,7 @@ ext {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'io.sentry:sentry-spring-boot-starter-jakarta'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     // JWT API 의존성
