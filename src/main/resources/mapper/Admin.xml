@@ -4,17 +4,43 @@
 
 <mapper namespace="com.searchsquare.admin.repository.AdminRepository">
 
-  <resultMap id="monthlyUserStats" type="monthlyUserStatsDto">
+  <resultMap id="monthlyMemberStats" type="monthlyMemberStatsDto">
     <result column="member_stats" property="memberStats"/>
     <result column="date" property="date"/>
   </resultMap>
 
-  <select id="getMonthlyUserStats" resultMap="monthlyUserStats">
+  <resultMap id="genderStats" type="genderStatsDto">
+    <result column="member_stats" property="memberStats"/>
+    <result column="gender" property="gender"/>
+  </resultMap>
+
+  <resultMap id="ageStats" type="ageStatsDto">
+    <result column="member_stats" property="memberStats"/>
+    <result column="age" property="age"/>
+  </resultMap>
+
+  <select id="getMonthlyMemberStats" resultMap="monthlyMemberStats">
     select count(login_log_id) as 'member_stats', date_format(login_time, '%Y-%m') as 'date'
     from login_log
     where login_time between date_format(date_sub(curdate(), interval 11 month), '%Y-%m-1') and curdate()
     group by date_format(login_time, '%Y-%m')
     order by login_time asc;
+  </select>
+
+  <select id="getGenderStats" resultMap="genderStats">
+    select count(member_id) as member_stats,
+           gender
+    from member
+    group by gender
+    order by gender asc;
+  </select>
+
+  <select id="getAgeStats" resultMap="ageStats">
+    select count(member_id) as member_stats,
+           age
+    from member
+    group by age
+    order by age asc;
   </select>
 
 </mapper>

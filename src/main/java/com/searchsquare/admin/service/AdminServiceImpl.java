@@ -1,7 +1,9 @@
 package com.searchsquare.admin.service;
 
 import com.searchsquare.admin.repository.AdminRepository;
-import com.searchsquare.admin.service.dto.MonthlyUserStatsDto;
+import com.searchsquare.admin.service.dto.AgeStatsDto;
+import com.searchsquare.admin.service.dto.GenderStatsDto;
+import com.searchsquare.admin.service.dto.MonthlyMemberStatsDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,17 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
 
     @Override
-    public List<MonthlyUserStatsDto> getMonthlyUserStats() {
-        return adminRepository.getMonthlyUserStats();
+    public List<MonthlyMemberStatsDto> getMonthlyMemberStats() {
+        return adminRepository.getMonthlyMemberStats();
+    }
+
+    @Override
+    public List<GenderStatsDto> getGenderStats() {
+        return adminRepository.getGenderStats();
+    }
+
+    @Override
+    public List<AgeStatsDto> getAgeStats() {
+        return adminRepository.getAgeStats();
     }
 }
