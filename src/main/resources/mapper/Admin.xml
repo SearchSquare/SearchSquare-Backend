@@ -14,6 +14,11 @@
     <result column="gender" property="gender"/>
   </resultMap>
 
+  <resultMap id="ageStats" type="ageStatsDto">
+    <result column="member_stats" property="memberStats"/>
+    <result column="age" property="age"/>
+  </resultMap>
+
   <select id="getMonthlyMemberStats" resultMap="monthlyMemberStats">
     select count(login_log_id) as 'member_stats', date_format(login_time, '%Y-%m') as 'date'
     from login_log
@@ -30,5 +35,12 @@
     order by gender asc;
   </select>
 
+  <select id="getAgeStats" resultMap="ageStats">
+    select count(member_id) as member_stats,
+           age
+    from member
+    group by age
+    order by age asc;
+  </select>
 
 </mapper>

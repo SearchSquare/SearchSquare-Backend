@@ -1,6 +1,7 @@
 package com.searchsquare.admin.service;
 
 import com.searchsquare.admin.repository.AdminRepository;
+import com.searchsquare.admin.service.dto.AgeStatsDto;
 import com.searchsquare.admin.service.dto.GenderStatsDto;
 import com.searchsquare.admin.service.dto.MonthlyMemberStatsDto;
 import java.util.List;
@@ -21,5 +22,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<GenderStatsDto> getGenderStats() {
         return adminRepository.getGenderStats();
+    }
+
+    @Override
+    public List<AgeStatsDto> getAgeStats() {
+        return adminRepository.getAgeStats();
     }
 }

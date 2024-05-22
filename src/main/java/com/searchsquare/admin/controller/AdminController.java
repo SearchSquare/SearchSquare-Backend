@@ -1,6 +1,7 @@
 package com.searchsquare.admin.controller;
 
 import com.searchsquare.admin.service.AdminService;
+import com.searchsquare.admin.service.dto.AgeStatsDto;
 import com.searchsquare.admin.service.dto.GenderStatsDto;
 import com.searchsquare.admin.service.dto.MonthlyMemberStatsDto;
 import com.searchsquare.core.response.BaseResponse;
@@ -31,6 +32,12 @@ public class AdminController {
     @GetMapping("/rate/gender")
     public ResponseEntity<BaseResponse<List<GenderStatsDto>>> getGenderStats() {
         List<GenderStatsDto> res = adminService.getGenderStats();
+        return ResponseEntity.ok(BaseResponse.ofSuccess(res));
+    }
+
+    @GetMapping("/rate/age")
+    public ResponseEntity<BaseResponse<List<AgeStatsDto>>> getAgeStats() {
+        List<AgeStatsDto> res = adminService.getAgeStats();
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
 }
