@@ -1,8 +1,8 @@
 package com.searchsquare.api.controller;
 
 import com.searchsquare.api.controller.facade.GetAroundPriceApiFacade;
-import com.searchsquare.api.service.AroundPriceApiDto;
 import com.searchsquare.api.service.KeyService;
+import com.searchsquare.api.service.dto.AroundPriceApiDto;
 import com.searchsquare.api.service.dto.SearchAroundPriceApiCond;
 import com.searchsquare.api.service.dto.ServiceKeyDto;
 import com.searchsquare.core.response.BaseResponse;

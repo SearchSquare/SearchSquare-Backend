@@ -1,6 +1,5 @@
-package com.searchsquare.api.service;
+package com.searchsquare.api.service.dto;
 
-import com.searchsquare.api.service.dto.HousePriceApiDto;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
