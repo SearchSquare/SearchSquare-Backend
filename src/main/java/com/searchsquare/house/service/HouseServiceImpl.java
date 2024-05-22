@@ -10,6 +10,8 @@ import com.searchsquare.house.service.dto.SearchAroundPriceCond;
 import com.searchsquare.house.service.dto.SearchHouseCond;
 import com.searchsquare.house.service.dto.SearchHouseDealCond;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +59,9 @@ public class HouseServiceImpl implements HouseService {
     public AroundPriceDto getAroundPriceList(SearchAroundPriceCond cond) {
         List<HousePriceDto> target = houseRepository.getTargetPriceList(cond);
         List<HousePriceDto> around = houseRepository.getAroundPriceList(cond);
+        Set<String> yearSet = target.stream().map(HousePriceDto::getYear)
+            .collect(Collectors.toSet());
+        around.removeIf(dto -> !yearSet.contains(dto.getYear()));
         return AroundPriceDto.builder()
             .target(target)
             .around(around)
