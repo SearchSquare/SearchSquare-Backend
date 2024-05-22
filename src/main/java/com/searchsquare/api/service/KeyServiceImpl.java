@@ -7,14 +7,18 @@ import com.searchsquare.core.util.JwtUtil;
 import com.searchsquare.core.util.ServiceKeyUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class KeyServiceImpl implements KeyService {
 
-    private final int DAILY_LIMIt = 100;
+    @Value("$service-key.daily-limit")
+    private int DAILY_LIMIt;
     private final JwtUtil jwtUtil;
     private final ServiceKeyUtil serviceKeyUtil;
     private final KeyRepository keyRepository;
@@ -29,6 +33,11 @@ public class KeyServiceImpl implements KeyService {
     @Override
     public ServiceKeyDto createKey(String accessToken) {
         int memberId = toInt(jwtUtil.getMemberId(accessToken));
+        ServiceKeyDto previousServiceKey = keyRepository.getServiceKey(memberId);
+        if (previousServiceKey != null) {
+            log.info("기존 Service Key 중지");
+            keyRepository.remove(previousServiceKey);
+        }
         String serviceKey = serviceKeyUtil.createServiceKey(DAILY_LIMIt);
         keyRepository.save(CreateTokenDto.builder()
             .memberId(memberId)

@@ -21,4 +21,10 @@
     where member_id = #{memberId}
       and status = 'ACTIVE';
   </select>
+
+  <delete id="remove" parameterType="serviceKeyDto">
+    delete
+    from api_info
+    where api_key = #{serviceKey};
+  </delete>
 </mapper>
