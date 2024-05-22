@@ -1,7 +1,8 @@
 package com.searchsquare.admin.controller;
 
 import com.searchsquare.admin.service.AdminService;
-import com.searchsquare.admin.service.dto.MonthlyUserStatsDto;
+import com.searchsquare.admin.service.dto.GenderStatsDto;
+import com.searchsquare.admin.service.dto.MonthlyMemberStatsDto;
 import com.searchsquare.core.response.BaseResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,9 +22,15 @@ public class AdminController {
     private final AdminService adminService;
     private final GenericResponseService responseBuilder;
 
-    @GetMapping("/members/rate")
-    public ResponseEntity<BaseResponse<List<MonthlyUserStatsDto>>> getMonthlyUserStats() {
-        List<MonthlyUserStatsDto> res = adminService.getMonthlyUserStats();
+    @GetMapping("/rate/members")
+    public ResponseEntity<BaseResponse<List<MonthlyMemberStatsDto>>> getMonthlyMemberStats() {
+        List<MonthlyMemberStatsDto> res = adminService.getMonthlyMemberStats();
+        return ResponseEntity.ok(BaseResponse.ofSuccess(res));
+    }
+
+    @GetMapping("/rate/gender")
+    public ResponseEntity<BaseResponse<List<GenderStatsDto>>> getGenderStats() {
+        List<GenderStatsDto> res = adminService.getGenderStats();
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
 }

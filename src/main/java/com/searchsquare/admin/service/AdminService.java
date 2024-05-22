@@ -1,9 +1,12 @@
 package com.searchsquare.admin.service;
 
-import com.searchsquare.admin.service.dto.MonthlyUserStatsDto;
+import com.searchsquare.admin.service.dto.GenderStatsDto;
+import com.searchsquare.admin.service.dto.MonthlyMemberStatsDto;
 import java.util.List;
 
 public interface AdminService {
 
-    List<MonthlyUserStatsDto> getMonthlyUserStats();
+    List<MonthlyMemberStatsDto> getMonthlyMemberStats();
+
+    List<GenderStatsDto> getGenderStats();
 }

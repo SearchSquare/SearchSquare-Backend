@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MonthlyUserStatsDto {
+public class MonthlyMemberStatsDto {
 
     private int memberStats;
     private String date;
