@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -20,8 +21,11 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-        Object handler)
-        throws Exception {
+        Object handler) {
+        if (HttpMethod.OPTIONS.matches(request.getMethod())) {
+            log.info("PreFlight 요청");
+            return true;
+        }
         final String token = request.getHeader(HEADER_AUTHORIZATION);
         if (token != null && jwtUtil.checkToken(token)) {
             log.info("토큰 사용 가능 : {}", token);
