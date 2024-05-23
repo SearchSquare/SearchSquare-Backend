@@ -6,5 +6,5 @@ public interface KeyService {
 
     void isValid(String serviceKey);
 
-    ServiceKeyDto createKey(String accessToken);
+    ServiceKeyDto getServiceKey(String accessToken);
 }
