@@ -11,6 +11,7 @@
     <result column="name" property="name"/>
     <result column="lat" property="lat"/>
     <result column="lng" property="lng"/>
+    <result column="is_popular" property="popular"/>
     <association property="address" resultMap="address"/>
     <association property="price" resultMap="price"/>
   </resultMap>
@@ -81,27 +82,29 @@
   </select>
 
   <select id="getHouseList" parameterType="searchHouseCond" resultMap="house">
-    select apt.apt_id,
-    apt.name,
-    apt.lat,
-    apt.lng,
-    apt.built_year,
-    apt.jibun,
-    dong.dong_code,
-    dong.sido,
-    dong.gugun,
-    dong.dong,
-    ifnull(max(apt_deal.price), 0) as max_price,
-    ifnull(min(apt_deal.price), 0) as min_price
-    from apt
-    left join dong on apt.dong_code = dong.dong_code
-    left join apt_deal on apt.apt_id = apt_deal.apt_id
-    where apt.dong_code = #{dongCode}
+    select a.apt_id,
+    a.name,
+    a.lat,
+    a.lng,
+    a.built_year,
+    a.jibun,
+    d.dong_code,
+    d.sido,
+    d.gugun,
+    d.dong,
+    ifnull(max(ad.price), 0) as max_price,
+    ifnull(min(ad.price), 0) as min_price,
+    if(pa.apt_id is not null, true, false) as is_popular
+    from apt a
+    left join dong d on a.dong_code = d.dong_code
+    left join apt_deal ad on a.apt_id = ad.apt_id
+    left join popular_apt pa on pa.apt_id = a.apt_id
+    where a.dong_code = #{dongCode}
     <if test="lastHouseId != null">
-      and apt.apt_id > #{lastHouseId}
+      and a.apt_id > #{lastHouseId}
     </if>
-    group by apt.apt_id
-    order by apt.apt_id asc
+    group by a.apt_id
+    order by a.apt_id asc
     limit #{size};
   </select>
 

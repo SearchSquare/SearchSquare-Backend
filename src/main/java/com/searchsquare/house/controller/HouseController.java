@@ -13,6 +13,8 @@ import com.searchsquare.house.service.dto.SearchHouseDealCond;
 import jakarta.validation.constraints.Max;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/house")
 public class HouseController {
 
+    private static final Logger log = LoggerFactory.getLogger(HouseController.class);
     private final HouseService houseService;
     private final HouseLogService houseLogService;
 
@@ -98,6 +101,7 @@ public class HouseController {
             .houseId(houseId)
             .lastDealId(lastDealId)
             .build());
+        log.info("매물 조회");
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
 
