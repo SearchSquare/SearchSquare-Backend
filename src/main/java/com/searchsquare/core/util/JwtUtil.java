@@ -99,5 +99,4 @@ public class JwtUtil {
             .build()
             .parseClaimsJws(token.replace(BEARER, ""));
     }
-
 }

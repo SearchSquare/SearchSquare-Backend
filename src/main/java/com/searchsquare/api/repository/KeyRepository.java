@@ -10,4 +10,6 @@ public interface KeyRepository {
     void save(CreateTokenDto createTokenDto);
 
     ServiceKeyDto getServiceKey(int memberId);
+
+    void remove(ServiceKeyDto previousServiceKey);
 }
