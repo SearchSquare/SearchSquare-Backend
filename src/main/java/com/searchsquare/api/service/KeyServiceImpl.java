@@ -17,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class KeyServiceImpl implements KeyService {
 
-    @Value("$service-key.daily-limit")
-    private String DAILY_LIMIt;
+    @Value("${service-key.daily-limit}")
+    private int DAILY_LIMIt;
     private final JwtUtil jwtUtil;
     private final ServiceKeyUtil serviceKeyUtil;
     private final KeyRepository keyRepository;
@@ -38,7 +38,7 @@ public class KeyServiceImpl implements KeyService {
             log.info("기존 Service Key 중지");
             keyRepository.remove(previousServiceKey);
         }
-        String serviceKey = serviceKeyUtil.createServiceKey(toInt(DAILY_LIMIt));
+        String serviceKey = serviceKeyUtil.createServiceKey(DAILY_LIMIt);
         keyRepository.save(CreateTokenDto.builder()
             .memberId(memberId)
             .serviceKey(serviceKey)
