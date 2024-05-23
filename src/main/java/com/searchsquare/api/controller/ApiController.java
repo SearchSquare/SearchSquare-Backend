@@ -47,7 +47,7 @@ public class ApiController {
     @GetMapping("/key")
     public ResponseEntity<BaseResponse<ServiceKeyDto>> getServiceKey(
         @RequestHeader("Authorization") String accessToken) {
-        ServiceKeyDto res = keyService.createKey(accessToken);
+        ServiceKeyDto res = keyService.getServiceKey(accessToken);
         return ResponseEntity.ok(BaseResponse.ofSuccess(res));
     }
 }
